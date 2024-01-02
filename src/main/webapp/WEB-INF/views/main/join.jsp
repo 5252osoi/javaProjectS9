@@ -122,7 +122,7 @@
 				border:1px solid #ddd;
 			}
 		}
-	    /* 875xp이하면 id="hidden"*/
+	    /* 875xp이하면 id="hidden" */
 	    /* id="875px의 최대 넓이가 400px로 변경됩니다."*/
 		@media ( max-width : 875px) {
 			#hidden {
