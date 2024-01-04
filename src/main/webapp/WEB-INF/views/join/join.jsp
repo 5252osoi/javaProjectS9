@@ -23,7 +23,7 @@
 			let mid = myform.mid.value.trim();
 			/* alert("입력한아이디 : " + mid);  */
 			$.ajax({
-				url		: 'idCheck.in',
+				url		: 'idCheck',
 				type	: 'post',
 				data	: {mid : mid},
 				success	: function(res) {
