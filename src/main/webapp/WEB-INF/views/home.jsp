@@ -97,7 +97,7 @@
 							</div>
 							<div class="row mx-auto p-0 m-0">
 								<div class="col mx-auto p-0 m-0 text-center">
-									<a href="jo.in"><font color="#777"><b>비밀번호를 잊으셨나요?</b></font></a>
+									<a href="member/join"><font color="#777"><b>비밀번호를 잊으셨나요?</b></font></a>
 								</div>
 							</div>
 						</div>
@@ -106,7 +106,7 @@
 				</div>
 				<div class="row m-2" style="width:350px;"></div>
 				<div class="row p-0 m-0 justify-content-center align-items-center" id="bdr" style="width:350px; height:60px;">
-					<span> 계정이 없으신가요 ? <a href="jo.in" class="text-primary"><b>가입하기</b></a> </span>
+					<span> 계정이 없으신가요 ? <a href="member/join" class="text-primary"><b>가입하기</b></a> </span>
 				</div>
 				<div class="row m-2" style="width:350px;"></div>
 				<div class="row p-0 m-0 justify-content-center align-items-center" style="width:350px;">
@@ -115,7 +115,7 @@
 				<div class="row m-2" style="width:350px;"></div>
 				<div class="row p-0 m-0 justify-content-center align-items-center" style="width:350px;">
 					<span class="mr-2"><img src="${ctp}/images/googlePlayLink.png" id="download" style="height:40px;"/></span>
-					<span><img src="${ctp}/images/msLink.png" id="download" style="height:40px;"/></span>
+					<span><i mg src="${ctp}/images/msLink.png" id="download" style="height:40px;"/></span>
 				</div>
 			</div>
 		</div>

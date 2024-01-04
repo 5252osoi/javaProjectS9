@@ -62,7 +62,7 @@ public class HomeController {
 				cookieMid.setMaxAge(60*60*24*7);
 				response.addCookie(cookieMid);
 			}
-			else {
+			else {	
 				Cookie[] cookies = request.getCookies();
 				for(int i=0; i<cookies.length; i++) {
 					if(cookies[i].getName().equals("cMid")) {
