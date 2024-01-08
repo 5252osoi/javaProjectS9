@@ -20,6 +20,12 @@ public class MessageController {
 		} else if(msgFlag.equals("memberLoginNo")) {
 			model.addAttribute("msg", "로그인 실패");
 			model.addAttribute("url", "/");
+		} else if(msgFlag.equals("memberJoinOk")) {
+			model.addAttribute("msg", "회원가입 완료");
+			model.addAttribute("url", "/");
+		} else if(msgFlag.equals("memberJoinNo")) {
+			model.addAttribute("msg", "회원가입실패");
+			model.addAttribute("url", "/member/join");
 		}
 		
 		return "include/message";

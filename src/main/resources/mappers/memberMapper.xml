@@ -7,4 +7,8 @@
 	</select> 
 	
 	
+	<insert id="setMemberJoinOk">
+		INSERT INTO member2 VALUES(DEFAULT,#{vo.mid},#{vo.pwd},#{vo.name},#{vo.email},#{vo.tel},#{vo.pr},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
+	</insert>
+	
 </mapper>

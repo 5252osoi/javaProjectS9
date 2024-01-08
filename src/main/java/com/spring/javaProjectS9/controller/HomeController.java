@@ -77,13 +77,6 @@ public class HomeController {
 		else return "redirect:/message/memberLoginNo";
 	}
 	
-	@RequestMapping(value = "/member/join",method = RequestMethod.GET)
-	public String joinGet() {
-		return "join/join";
-	}
-	@RequestMapping(value = "/member/join",method = RequestMethod.POST)
-	public String joinPost() {
-		return "join/join";
-	}
+
 	
 }

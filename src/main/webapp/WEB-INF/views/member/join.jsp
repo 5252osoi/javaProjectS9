@@ -11,7 +11,6 @@
 		<!--아이콘,css-->
 	<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 	<jsp:include page="/WEB-INF/views/include/style.jsp"/>
-	<!---->
 	<script>
 	'use strict';
     // 아이디와 닉네임 중복버튼을 클릭했는지의 여부를 확인하기위한 변수(버튼 클릭후에는 내용 수정처리 못하도록 처리)
@@ -23,11 +22,11 @@
 			let mid = myform.mid.value.trim();
 			/* alert("입력한아이디 : " + mid);  */
 			$.ajax({
-				url		: 'idCheck',
+				url		: '${ctp}/member/idCheck',
 				type	: 'post',
 				data	: {mid : mid},
 				success	: function(res) {
-					if(res==1){
+					if(res==1){ws
 						$('#demo').html("<font color='red'>이미 존재하는 아이디입니다.</font>");
 						idCheckSw = 0;
 						<!-- 이미 존재하는 아이디라면 idCheckSw=0으로(신규가입불가) -->
@@ -156,7 +155,7 @@
 						</div>
 					</div>
 					<!-- 로그인폼 -->
-					<form name="myform" id="myform" method="post" action="memberJo.in">
+					<form name="myform" id="myform" method="post">
 						<div class="mx-auto p-0 m-0" style="width:270px;">
 							<div class="row mx-auto p-0 mb-2">
 								<div class="col mx-auto p-0 m-0">
@@ -197,7 +196,7 @@
 				</div>
 				<div class="row m-2" style="width:350px;"></div>
 				<div class="row p-0 m-0 justify-content-center align-items-center" id="bdr" style="width:350px; height:60px;">
-					<span> 계정이 있으신가요 ? <a href="index.jsp" class="text-primary">로그인</a> </span>
+					<span> 계정이 있으신가요 ? <a href="/" class="text-primary">로그인</a> </span>
 				</div>
 				<div class="row m-2" style="width:350px;"></div>
 				<div class="row p-0 m-0 justify-content-center align-items-center" style="width:350px;">

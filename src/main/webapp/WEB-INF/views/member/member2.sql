@@ -1,6 +1,6 @@
 show tables;
 
-create table member(
+create table member2(
 	idx		int not null auto_increment primary key,
 	mid		varchar(60) not null,
 	pwd		varchar(100) not null,
@@ -15,13 +15,12 @@ create table member(
 	follower int default 0,
 	unique(mid)
 );
-drop table member;
+drop table member2;
 
-select * from member order by idx desc limit 0,5;
+select * from member2 order by idx desc limit 0,5;
 
-desc member;
-select * from member;
-insert into member values(default,'admin@naver.com','1234','관리자','admin@naver.com','010-9999-1111','관리자입니다.',default,default,default,default,default);
+desc member2;
+select * from member2;
 
 create table IDPhoto(
 	idx 			int not null auto_increment,	/*프로필이미지 idx*/
@@ -29,7 +28,7 @@ create table IDPhoto(
 	IDPhotofName	varchar(200) not null,			/*유저프로필사진의 이미지명*/
 	IDPhotofSName	varchar(200) not null,			/*서버에 저장된 유저프로필사진의 이미지명 */
 	primary key(idx),
-	foreign key(userMid) references member(mid)
+	foreign key(userMid) references member2(mid)
 	on update cascade							/* 부모필드를 수정하면 함께 영향을 받는다. */
 	on delete restrict	
 );

@@ -14,7 +14,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Override
 	public MemberVO getMemberIdCheck(String mid) {
-		return memberDAO.getgetMemberIdCheck(mid);
+		return memberDAO.getMemberIdCheck(mid);
+	}
+
+	@Override
+	public int setMemberJoinOk(MemberVO vo) {
+		return memberDAO.setMemberJoinOk(vo);
 	}
 
 }
