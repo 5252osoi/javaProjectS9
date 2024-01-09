@@ -72,7 +72,7 @@ public class HomeController {
 					}
 				}
 			}
-			return "redirect:/message/memberLoginOk?name="+vo.getName();
+			return "redirect:/message/memberLoginOk?mid="+vo.getMid();
 		}
 		else return "redirect:/message/memberLoginNo";
 	}

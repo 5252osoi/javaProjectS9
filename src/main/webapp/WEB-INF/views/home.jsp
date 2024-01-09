@@ -73,7 +73,7 @@
 						<img style="width:175px; vertical-align:middle;" src="${ctp}/images/instagram_text.png"/>
 					</div>
 					<!-- 로그인폼 -->
-					<form name="myform" id="myform" method="post" action="log.in">
+					<form name="myform" id="myform" method="post">
 						<div class="mx-auto p-0 m-0" style="width:270px;">
 							<div class="row mx-auto p-0 mb-2">
 								<div class="col mx-auto p-0 m-0">

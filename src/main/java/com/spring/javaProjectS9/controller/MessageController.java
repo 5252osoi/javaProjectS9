@@ -16,7 +16,7 @@ public class MessageController {
 		
 		if(msgFlag.equals("memberLoginOk")) {
 			model.addAttribute("msg", mid + "님 로그인 되셨습니다.");
-			model.addAttribute("url", "/mainPage/main?mid="+mid);
+			model.addAttribute("url", "/post/main?mid="+mid);
 		} else if(msgFlag.equals("memberLoginNo")) {
 			model.addAttribute("msg", "로그인 실패");
 			model.addAttribute("url", "/");
