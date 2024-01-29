@@ -31,6 +31,7 @@
 	</select>
 	
 	<select id="getUserModalInfo" resultType="com.spring.javaProjectS9.vo.PostVO">
+		SELECT * FROM posting2 where mid=#{mid} ORDER BY posting2.idx DESC LIMIT 0,3;
 	</select>
 	
 	

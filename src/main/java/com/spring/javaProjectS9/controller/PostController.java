@@ -42,6 +42,7 @@ public class PostController {
 	PostService postService;
 	
 	
+	
 	//메인화면출력
 	@RequestMapping(value = "/main",method = RequestMethod.GET)
 	public String postMainGet(Model model,String mid,HttpSession session,
@@ -243,12 +244,17 @@ public class PostController {
 	//hover로 모달창출력
 	@ResponseBody
 	@RequestMapping(value ="/userModalInfo",method = RequestMethod.POST)
-	public String userModalInfoPost(String mid) {
+	public String userModalInfoPost(Model model, String mid) {
 		
-		//mid로 검색한뒤 최근게시글을 3개까지 가져옴
-		List<PostVO> vos = postService.getUserModalInfo(mid);
+		MemberVO mvo = memberService.getMemberIdCheck(mid);
 		
+		//mid로 검색한뒤 최근게시글을 3개까지 가져옴(첫 이미지만 3개씀)
+		List<PostVO> pvos = postService.getUserModalInfo(mid);
+
 		//modelAndView에 담아서 보낸다음 .html로 출력하는방식이 괜찮을듯?
+		model.addAttribute("mvo",mvo);
+		model.addAttribute("pvos",pvos);
+		
 		return "post/userModalInfo";
 	}
 	
