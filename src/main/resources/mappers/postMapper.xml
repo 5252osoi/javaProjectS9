@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.javaProjectS9.dao.PostDAO">
+	
+	<select id="getPostList" resultType="com.spring.javaProjectS9.vo.PostVO">
+		SELECT * , 
+		DATEDIFF(WDate, now()) AS date_diff, 
+		TIMESTAMPDIFF(hour, WDate, now()) AS hour_diff, 
+		(SELECT COUNT(*) FROM postReply2 WHERE postIdx=p.idx) AS replyCnt 
+		FROM posting2 p ORDER BY idx DESC LIMIT #{startIdxNo}, #{pageSize};
+	</select> 
+	
+	<select id="getCheckLike" resultType="com.spring.javaProjectS9.vo.PostLikeVO">
+		SELECT l.idx AS idx, 
+		l.postIdx AS postIdx, 
+		l.mid AS mid 
+		FROM posting2 p LEFT JOIN postLike2 l ON p.idx = l.postIdx 
+		AND l.mid = #{sMid} ORDER BY p.idx DESC LIMIT #{startIdxNo},#{pageSize} ;
+	</select>
+	
+	<select id="getReplyList" resultType="com.spring.javaProjectS9.vo.PostReplyVO" parameterType="hashmap">
+		SELECT postReply2.idx, postReply2.postIdx, postReply2.mid, postReply2.hostIp, 
+		postReply2.content, postReply2.likes, postReply2.wDate 
+		FROM postReply2 
+		LEFT JOIN posting2 ON postReply2.postIdx = posting2.idx 
+		WHERE posting2.idx IN 
+		<foreach collection="hm.idxType" item="type" open="(" close=")" separator=",">
+			#{type}
+		</foreach> 
+		ORDER BY posting2.idx, postReply2.idx;
+	</select>
+	
+	<select id="getUserModalInfo" resultType="com.spring.javaProjectS9.vo.PostVO">
+	</select>
+	
+	
+	<insert id="setPostUpload">
+		INSERT INTO posting2 VALUES(default,#{vo.mid},#{vo.FName},#{vo.FSName},#{vo.FSize},#{vo.content},#{vo.hostIp},default,default,default) ;
+	</insert>
+	
+	<insert id="setPostReplyInput">
+		INSERT INTO postReply2 VALUES(default,#{postIdx},#{mid},#{hostIp},#{content},default,default);
+	</insert>
+	
+	<insert id="setLikePlus">
+		INSERT INTO postLike2 VALUES(default,#{idx},#{mid},default);
+	</insert>
+	
+	
+	<update id="setPostEdit">
+		UPDATE posting2 SET content = #{content} WHERE idx = #{idx};
+	</update>
+	
+	
+	
+	<delete id="setPostDelete">
+		DELETE FROM posting2 WHERE idx = #{idx};
+	</delete>
+	
+	<delete id="setPostReplyDelete">
+		DELETE FROM postReply2 WHERE idx = #{idx};
+	</delete>
+	
+	<delete id="setLikeMinus">
+		DELETE FROM postLike2 WHERE postIdx = #{idx} AND mid = #{mid};
+	</delete>
+	
+	
+	
+</mapper>

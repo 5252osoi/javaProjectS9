@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.javaProjectS9.dao.MemberDAO">
+	
+	<select id="getMemberIdCheck" resultType="com.spring.javaProjectS9.vo.MemberVO">
+		select * from member2 where mid = #{mid};
+	</select> 
+	<select id="getRecommendUser" resultType="com.spring.javaProjectS9.vo.MemberVO">
+		select * from member2 where mid!=#{sMid} order by idx desc limit 0,5;
+	</select>
+	<select id="getRanRecommendUser" resultType="com.spring.javaProjectS9.vo.MemberVO">
+		select * from member2 where mid!=#{sMid} order by idx desc,rand() limit 7;
+	</select>
+	
+	<insert id="setMemberJoinOk">
+		INSERT INTO member2 VALUES(DEFAULT,#{vo.mid},#{vo.pwd},#{vo.name},#{vo.email},#{vo.tel},#{vo.pr},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
+	</insert>
+	
+</mapper>

@@ -1,0 +1,7 @@
+/build/
+lecture
+target
+pom.properties
+.classpath
+MANIFEST.MF
+.properties
