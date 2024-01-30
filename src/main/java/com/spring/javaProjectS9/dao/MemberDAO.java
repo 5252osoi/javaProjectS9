@@ -16,5 +16,7 @@ public interface MemberDAO {
 
 	public List<MemberVO> getRanRecommendUser(@Param("sMid") String sMid);
 
+	public int setPostCnt();
+
 	
 }

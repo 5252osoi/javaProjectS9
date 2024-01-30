@@ -40,10 +40,15 @@ public class PostServiceImpl implements PostService {
 	public int setPostUpload(PostVO vo) {
 		return postDAO.setPostUpload(vo);
 	}
-
+	//게시글삭제
 	@Override
 	public int setPostDelete(int idx) {
 		return postDAO.setPostDelete(idx);
+	}
+	//게시글에 딸린 모든 댓글 삭제
+	@Override
+	public int setPostAndReplyDelete(int idx) {
+		return postDAO.setPostAndReplyDelete(idx);
 	}
 
 	@Override
@@ -74,6 +79,16 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostVO> getUserModalInfo(String mid) {
 		return postDAO.getUserModalInfo(mid);
+	}
+
+	@Override
+	public int setEditLikes() {
+		return postDAO.setEditLikes();
+	}
+
+	@Override
+	public List<PostVO> getUserPagePost(String mid) {
+		return postDAO.getUserPagePost(mid);
 	}
 	
 }

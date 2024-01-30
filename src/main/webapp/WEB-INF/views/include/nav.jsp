@@ -116,7 +116,7 @@
 		<nav class="navbar bottom-nav">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<button type="button" onclick="location.href='logout.in';" title="로그아웃" class="nav-link btn btn-light d-inline-flex align-items-center">
+					<button type="button" onclick="location.href='${ctp}/';" title="로그아웃" class="nav-link btn btn-light d-inline-flex align-items-center">
 						<i class="ri-logout-box-line ml-2"></i><span class="btntext ml-2">로그아웃</span>
 					</button>
 				</li>

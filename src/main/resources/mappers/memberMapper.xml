@@ -16,4 +16,9 @@
 		INSERT INTO member2 VALUES(DEFAULT,#{vo.mid},#{vo.pwd},#{vo.name},#{vo.email},#{vo.tel},#{vo.pr},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
 	</insert>
 	
+	<update id="setPostCnt">
+		UPDATE member2 m SET m.post=(SELECT COUNT(p.mid) FROM posting2 p WHERE p.mid=m.mid;
+	</update>
+
+	
 </mapper>

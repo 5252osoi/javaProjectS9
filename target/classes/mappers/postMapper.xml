@@ -33,6 +33,13 @@
 	<select id="getUserModalInfo" resultType="com.spring.javaProjectS9.vo.PostVO">
 		SELECT * FROM posting2 where mid=#{mid} ORDER BY posting2.idx DESC LIMIT 0,3;
 	</select>
+
+	<select id="getUserPagePost" resultType="com.spring.javaProjectS9.vo.PostVO">
+		SELECT * FROM posting2 where mid=#{mid} ORDER BY posting2.idx DESC LIMIT 0,12;
+	</select>
+	
+	
+	
 	
 	
 	<insert id="setPostUpload">
@@ -52,10 +59,18 @@
 		UPDATE posting2 SET content = #{content} WHERE idx = #{idx};
 	</update>
 	
+	<update id="setEditLikes">
+		UPDATE posting2 p SET p.likes=(SELECT COUNT(l.idx) FROM postLike2 l WHERE l.postIdx = p.idx);
+	</update>
+	
 	
 	
 	<delete id="setPostDelete">
 		DELETE FROM posting2 WHERE idx = #{idx};
+	</delete>
+	
+	<delete id="setPostAndReplyDelete">
+		DELETE FROM postReply2 WHERE postIdx = #{idx};
 	</delete>
 	
 	<delete id="setPostReplyDelete">

@@ -14,4 +14,6 @@ public interface MemberService {
 
 	public List<MemberVO> getRanRecommendUser(String sMid);
 
+	public int setPostCnt();
+
 }

@@ -11,17 +11,7 @@
 	<script>
 	</script>		
 	<style>
-		/*
-		
-		All grid code is placed in a 'supports' rule (feature query) at the bottom of the CSS (Line 310).
-		
-		The 'supports' rule will only run if your browser supports CSS grid.
-		
-		Flexbox and floats are used as a fallback so that browsers which don't support grid will still recieve a similar layout.
-		
-		*/
-		
-		/* Base Styles */
+
 		
 		:root {
 		  font-size: 10px;
@@ -313,22 +303,13 @@
 		      display: block;
 		  }
 		}
-		
-		/* Spinner Animation */
-		
+
 		@keyframes loader {
 		  to {
 		      transform: rotate(360deg);
 		  }
 		}
 		
-		/*
-		
-		The following code will only run if your browser supports CSS grid.
-		
-		Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling.
-		
-		*/
 		
 		@supports (display: grid) {
 		  .profile {

@@ -309,9 +309,24 @@
 		function displayUserInfo(res,userId){
 			$('#userModal-'+userId+' .modal-body').html(res);
 		}
-		
-		
-		
+		/*
+		function userFollow(mid){
+	    	$.ajax({
+	    		url  : "member/userFollow",
+	    		type : "post",
+	    		data : {follower:'${smid}'
+	    				followee : mid
+	    		},
+	    		success:function(res) {
+	    			if(res == "0") alert('팔로우실패 ');
+	    			else location.reload();
+	    		},
+	    		error : function() {
+	    			alert("전송 오류!!");
+	    		}
+	    	});
+		}
+		*/
 		
 		
 	</script>
@@ -348,7 +363,7 @@
                 	<c:forEach var="rmVo" items="${rmVos}">
 	                    <div class="status-card">
 	                        <div class="profile-pic"><a class="showMD" href="#"><img src="${ctp}/images/noprofile.png" alt=""></a></div>
-	                        <p class="username"><a href="#">${rmVo.mid}</a></p>
+	                        <p class="username"><a href="${ctp}/member/userPage/${rmVo.mid}">${rmVo.mid}</a></p>
 	                    </div>
                 	</c:forEach>
                 </div>

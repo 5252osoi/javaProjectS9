@@ -1,5 +1,7 @@
 package com.spring.javaProjectS9.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.javaProjectS9.service.MemberService;
+import com.spring.javaProjectS9.service.PostService;
 import com.spring.javaProjectS9.vo.MemberVO;
+import com.spring.javaProjectS9.vo.PostVO;
 
 @Controller
 @RequestMapping("/member")
@@ -16,6 +20,10 @@ public class MemberController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	PostService postService;
+	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
@@ -43,6 +51,13 @@ public class MemberController {
 		return res+"";
 	}
 	
+	@RequestMapping(value = "/userPage",method = RequestMethod.GET)
+	public String userPageGet(String mid) {
+		
+		List<PostVO> vos = postService.getUserPagePost(mid);
+		
+		return "member/userPage";
+	}
 	
 	
 	

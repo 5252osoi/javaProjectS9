@@ -33,6 +33,12 @@ public interface PostDAO {
 
 	public List<PostVO> getUserModalInfo(@Param("mid") String mid);
 
+	public int setPostAndReplyDelete(@Param("idx") int idx);
+
+	public int setEditLikes();
+
+	public List<PostVO> getUserPagePost(@Param("mid") String mid);
+
 	
 
 }

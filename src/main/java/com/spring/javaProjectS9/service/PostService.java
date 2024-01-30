@@ -30,4 +30,10 @@ public interface PostService {
 
 	public List<PostVO> getUserModalInfo(String mid);
 
+	public int setPostAndReplyDelete(int idx);
+
+	public int setEditLikes();
+
+	public List<PostVO> getUserPagePost(String mid);
+
 }

@@ -34,4 +34,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.getRanRecommendUser(sMid);
 	}
 
+	@Override
+	public int setPostCnt() {
+		return memberDAO.setPostCnt();
+	}
+
 }

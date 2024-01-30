@@ -181,6 +181,10 @@ public class PostController {
 			e.printStackTrace();
 		}
 		
+		if(res!=0) {
+			res = memberService.setPostCnt();
+		}
+		
 		if(res!=0) return "redirect:/message/postUploadOk";
 		else return "redirect:/message/postUploadNo";
 	}
@@ -193,7 +197,10 @@ public class PostController {
 		System.out.println("넘어온 idx(포스트삭제) : " +idx);
 
 		int res=0;
-		res = postService.setPostDelete(idx);
+		res = postService.setPostAndReplyDelete(idx);
+		if (res!=0) {
+			res = postService.setPostDelete(idx);
+		}
 		
 		return res+"";
 	}
@@ -231,6 +238,9 @@ public class PostController {
 	public String likePlusPost(int idx,String mid) {
 		int res=0;
 		res=postService.setLikePlus(idx,mid);
+		if(res!=0) {
+			res=postService.setEditLikes();
+		}
 		return res+"";
 	}
 	//좋아요버튼 다시입력
@@ -239,23 +249,27 @@ public class PostController {
 	public String likeMinusPost(int idx,String mid) {
 		int res=0;
 		res=postService.setLikeMinus(idx,mid);
+		if(res!=0) {
+			res=postService.setEditLikes();
+		}
 		return res+"";
 	}
 	//hover로 모달창출력
 	@ResponseBody
 	@RequestMapping(value ="/userModalInfo",method = RequestMethod.POST)
-	public String userModalInfoPost(Model model, String mid) {
+	public ModelAndView userModalInfoPost(Model model, String mid) {
 		
 		MemberVO mvo = memberService.getMemberIdCheck(mid);
 		
 		//mid로 검색한뒤 최근게시글을 3개까지 가져옴(첫 이미지만 3개씀)
 		List<PostVO> pvos = postService.getUserModalInfo(mid);
 
-		//modelAndView에 담아서 보낸다음 .html로 출력하는방식이 괜찮을듯?
+		//modelAndView에 담아서 보낸다음 .html로 출력하는방식
 		model.addAttribute("mvo",mvo);
 		model.addAttribute("pvos",pvos);
-		
-		return "post/userModalInfo";
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/post/userModalInfo");
+		return mav;
 	}
 	
 }
