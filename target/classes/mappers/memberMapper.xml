@@ -12,13 +12,25 @@
 		select * from member2 where mid!=#{sMid} order by idx desc,rand() limit 7;
 	</select>
 	
+	
+	
 	<insert id="setMemberJoinOk">
 		INSERT INTO member2 VALUES(DEFAULT,#{vo.mid},#{vo.pwd},#{vo.name},#{vo.email},#{vo.tel},#{vo.pr},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT);
 	</insert>
+	<insert id="setUserFollow">
+		INSERT INTO follower2 VALUES(DEFAULT,#{follower},#{followee});
+	</insert>
+	
+	
 	
 	<update id="setPostCnt">
-		UPDATE member2 m SET m.post=(SELECT COUNT(p.mid) FROM posting2 p WHERE p.mid=m.mid;
+		UPDATE member2 m SET m.post=(SELECT COUNT(p.mid) FROM posting2 p WHERE p.mid=m.mid);
 	</update>
-
+	<update id="setUserFollowUpdate">
+		UPDATE member2 m SET m.follow=(SELECT COUNT(f.follower) FROM follower2 f WHERE f.followerMid=m.mid);
+	</update>
+	<update id="setUserFolloweeUpdate">
+		UPDATE member2 m SET m.follower=(SELECT COUNT(f.followeeMid) FROM follower2 f WHERE f.followeeMid=m.mid);
+	</update>
 	
 </mapper>

@@ -37,7 +37,16 @@
 	<select id="getUserPagePost" resultType="com.spring.javaProjectS9.vo.PostVO">
 		SELECT * FROM posting2 where mid=#{mid} ORDER BY posting2.idx DESC LIMIT 0,12;
 	</select>
-	
+
+	<select id="getShowPostInfo" resultType="com.spring.javaProjectS9.vo.PostVO">
+		SELECT * FROM posting2 WHERE idx=#{idx};
+	</select>	
+	<select id="getShowPostReply" resultType="com.spring.javaProjectS9.vo.PostReplyVO">
+		SELECT * FROM postReply2 WHERE postIdx=#{idx};
+	</select>	
+	<select id="getShowPostLikeCheck" resultType="com.spring.javaProjectS9.vo.PostLikeVO" >
+		SELECT * FROM postLike2 WHERE postIdx=#{idx} AND mid=#{mid};
+	</select>
 	
 	
 	
@@ -61,6 +70,10 @@
 	
 	<update id="setEditLikes">
 		UPDATE posting2 p SET p.likes=(SELECT COUNT(l.idx) FROM postLike2 l WHERE l.postIdx = p.idx);
+	</update>
+	
+	<update id="setPostReplyCnt">
+		UPDATE posting2 p SET p.reply=(SELECT COUNT(r.idx) FROM postreply2 r WHERE r.postIdx = p.idx);
 	</update>
 	
 	

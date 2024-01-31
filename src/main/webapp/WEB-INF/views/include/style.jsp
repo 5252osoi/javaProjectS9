@@ -60,13 +60,21 @@ a:hover{
     margin-top: 2rem;
     margin-left: 1.6rem;
 }
+
 .profile{
     display: flex;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     margin-top: 1.4rem;
 }
+.profile profile-info{
+	display: flex;
+    flex-direction: column;
+}
+
+
+
 .profile-img{
     display: flex;
     align-items: center;

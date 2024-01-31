@@ -83,70 +83,6 @@
 	    	}
 	    }
 
-		//모달 내부에서 파일넣기 버튼을 누르면 hidden속에있는 파일 버튼넣어짐
-		function clickFilebtn(){
-			document.getElementById('files').click();
-		}
-		
-		//모달창이 닫힐때 안에 있는 내용 초기화하기(새로고침)
-		$(document).ready(function(){
-			$('.modal').on('hidden.bs.modal', function () {
-				location.reload();
-			});
-		});
-		
-		//파일을 넣으면 모달창에 이미지 띄우기
-	    $(function(){
-	    	$("#files").on("change", function(e){
-	    		// 그림파일 체크
-	    		let files = e.target.files;
-	    		let filesArr = Array.prototype.slice.call(files);
-	    		
-	    		//console.log('filesArr',filesArr);
-	    		
-	    		filesArr.forEach(function(f){
-	    			if(!f.type.match("image.*")) {
-	    				alert("업로드할 파일은 이미지파일만 가능합니다.");
-	    			}
-	    		});
-	    		
-	    		// 멀티파일 이미지 미리보기
-	    		let i = e.target.files.length;
-	    		//들어온 파일의 갯수가 null이 아니면 #modalDemo안의 내용을 지우고 다시 출력
-	    		if(i!=null){
-					let strDemo='';
-	    			strDemo+='<div class="w3-content w3-display-container d-inline-flex align-items-center" style="overflow:auto; height:655px;"> ';
-	    			strDemo+='<div class="w-100 h-100" id="mdlDemo" >';
-	    			strDemo+='</div>';
-	    			strDemo+='</div>';
-	    			
-	    			$('#modalDemo').html(strDemo);
-	    			
-		    		for(let image of files) {
-						let img = document.createElement("img");
-		    			let reader = new FileReader();
-		    			reader.onload = function(e) {
-		    				img.setAttribute("src", e.target.result);
-		    				//img.setAttribute("width", 700);
-		    			}
-		    			reader.readAsDataURL(e.target.files[--i]);
-		    			document.querySelector("#mdlDemo").append(img);
-		    		}
-	    		}
-	    	});
-	    });
-	    function editPost(idx,content) {
-	    	$("#edit-modal #idx").val(idx);
-	    	$("#edit-modal #content").val(content);
-	    	console.log(idx);
-	    } 
-	    
-	    
-	    function editSubmit(){
-			document.getElementById("editForm").submit();
-	    }
-	    
-	    
 	    //포스트 삭제
 	    function deletePost(idx){
 	    	let ans = confirm("이 게시물을 삭제하시겠어요?");
@@ -168,94 +104,7 @@
 	    	});
 	    }
 	    
-	    //댓글달기
- 	    function replyCheck(idx) {
-	    	let content = $("#comment"+idx).val();
-	    	if(content.trim() == "") {
-	    		alert("댓글을 입력하세요");
-	    		$("#comment"+idx).focus();
-	    		return false;
-	    	}
-	    	let query = {
-	    			postIdx  	: idx,
-	    			mid			: '${sMid}',
-	    			hostIp		: '${pageContext.request.remoteAddr}',
-	    			content		: content
-	    	}
-	    	$.ajax({
-	    		url  : "${ctp}/post/postReplyInput",
-	    		type : "post",
-	    		data : query,
-	    		success:function(res) {
-	    			if(res == "1") {
-	    				alert("댓글이 입력되었습니다.");
-	    				location.reload();
-	    			}
-	    			else {
-	    				alert("댓글 입력 실패");
-	    			}
-	    		},
-	    		error : function() {
-	    			alert("전송오류!!");
-	    		}
-	    	});
-	    } 
-	    
-	    //댓글삭제
-	    function deleteReply(idx){
-	    	let ans = confirm("이 댓글을 삭제하시겠어요?")
-	    	if(!ans)return false;
-	    	$.ajax({
-	    		url  : "postReplyDelete",
-	    		type : "post",
-	    		data : {idx : idx},
-	    		success:function(res) {
-	    			if(res == "1") {
-	    				alert("댓글을 삭제했습니다.");
-	    				location.reload();
-	    			}
-	    			else alert("댓글삭제실패ㅋㅋ");
-	    		},
-	    		error : function() {
-	    			alert("전송 오류!!");
-	    		}
-	    	});
-	    }
-	    //좋아요 누르기 (게시글)
-		function likePlus(idx) {
-	    	$.ajax({
-	    		url  : "likePlus",
-	    		type : "post",
-	    		data : {idx : idx,
-	    				mid : '${sMid}'
-	    		},
-	    		success:function(res) {
-	    			if(res == "0") alert('좋아요실패ㅋㅋ싫어요ㅋㅋ');
-	    			else location.reload();
-	    		},
-	    		error : function() {
-	    			alert("전송 오류!!");
-	    		}
-	    	});
-	    }
-  		//좋아요 한번 더 누르기(게시글)
-	  	function likeMinus(idx) {
-	    	$.ajax({
-	    		url  : "likeMinus",
-	    		type : "post",
-	    		data : {idx : idx,
-	    				mid : '${sMid}'
-	    		},
-	    		success:function(res) {
-	    			if(res == "0") alert('싫어요실패ㅋㅋ좋아요ㅋㅋ.');
-	    			else location.reload();
-	    		},
-	    		error : function() {
-	    			alert("전송 오류!!");
-	    		}
-	    	});
-	    }
-  		
+
 	  	$(document).ready(function () {
 	  	    // Carousel 초기화
 	  	    $('.carousel').carousel();
@@ -267,8 +116,8 @@
 	  	    var userId = $(this).text();
 	  	    
 	  	    // 모달 위치 및 크기 설정
-	  	    var x = e.clientX;
-	  	    var y = e.clientY;
+	  	    var x = e.clientX ;
+	  	    var y = e.clientY ;
 	  	    $('#userModal-' + userId).css({
 	  	        'top': y + 'px',
 	  	        'left': x + 'px',
@@ -300,33 +149,24 @@
 	  	    	}
 	  	    });
 	  	    
+	  	}).on('click', '.username', function () {
+	  	    // 클릭 시 userPage로 이동
+	  	    var userId = $(this).text();
+	  	    window.location.href = "${ctp}/member/userPage?mid=" + userId;
+	  	    
 	  	}).on('mouseleave', '.username', function () {
 	  	    // 마우스가 떠날 때 모달 닫기
 	  	    var userId = $(this).text();
 	  	    $('#userModal-' + userId).modal('hide');
 	  	});
+		 
 		 //모달창에 출력
 		function displayUserInfo(res,userId){
 			$('#userModal-'+userId+' .modal-body').html(res);
 		}
-		/*
-		function userFollow(mid){
-	    	$.ajax({
-	    		url  : "member/userFollow",
-	    		type : "post",
-	    		data : {follower:'${smid}'
-	    				followee : mid
-	    		},
-	    		success:function(res) {
-	    			if(res == "0") alert('팔로우실패 ');
-	    			else location.reload();
-	    		},
-	    		error : function() {
-	    			alert("전송 오류!!");
-	    		}
-	    	});
-		}
-		*/
+		
+
+		
 		
 		
 	</script>
@@ -363,7 +203,7 @@
                 	<c:forEach var="rmVo" items="${rmVos}">
 	                    <div class="status-card">
 	                        <div class="profile-pic"><a class="showMD" href="#"><img src="${ctp}/images/noprofile.png" alt=""></a></div>
-	                        <p class="username"><a href="${ctp}/member/userPage/${rmVo.mid}">${rmVo.mid}</a></p>
+	                        <p class="username"><a href="#">${rmVo.mid}</a></p>
 	                    </div>
                 	</c:forEach>
                 </div>
@@ -378,7 +218,7 @@
 				                    <div class="profile-pic">
 				                        <img src="${ctp}/images/noprofile.png" alt="photo">
 				                    </div>
-				                    <p class="username" data-toggle="userModal-${vo.mid}" data-target="#userModal-${vo.mid}"><a href="#">${vo.mid}</a></p>
+				                    <p class="username" data-toggle="userModal-${vo.mid}" data-target="#userModal-${vo.mid}">${vo.mid}</p>
 				                </div>
 				                <!-- forEach문 안에 모달창을 만들어놔야 동적으로 사용할 수 있음 -->
 							    <!-- 사용자에 대한 모달 -->
@@ -451,7 +291,7 @@
 				                </div>
 				                <p class="likes text-start"><c:if test="${vo.likes!=0}">좋아요 ${vo.likes} 개</c:if></p>
 					            <span class="description">
-					            	<a href="#"><b>${vo.mid}</b></a>
+					            	<a href="${ctp}/member/userPage/${vo.mid}"><b>${vo.mid}</b></a>
 					            	${fn:replace(vo.content,newLine,'<br/>')}
 					            </span>
 				                <p class="post-time">${fn:substring(vo.WDate,0,11)}</p>
@@ -461,7 +301,7 @@
 				            		<c:if test="${rVo.postIdx==vo.idx}">
 				            		<!-- 댓글 -->
 					            		<div class="description w-100 p-0 m-0">
-				            				<a href="#"><b>${rVo.mid}</b></a>
+				            				<a href="${ctp}/member/userPage/${rVo.mid}"><b>${rVo.mid}</b></a>
 				            				${fn:replace(rVo.content,newLine,'<br/>')}
 				            				<!-- 댓글 삭제권한 (댓글작성자,게시글작성자,운영자) -->
 				            				<c:if test="${sMid==vo.mid || sMid=='admin' || sMid==rVo.mid}">
@@ -496,7 +336,7 @@
                 	<input type="hidden" id="profileID" value="${sMid}">
                 </div>
                 <div>
-                    <p class="username"><a href="#">${sMid}</a></p>
+                    <p class="username"><a href="${ctp}/member/userPage/${sMid}">${sMid}</a></p>
                     <p class="sub-text">${sName}</p>
                 </div>
             </div>
@@ -508,7 +348,7 @@
 	                    <a href="#"><img src="${ctp}/images/noprofile.png" alt=""></a>
 	                </div>
 	                <div>
-	                    <p class="username"><a href="#">${mVo.mid}</a></p>
+	                    <p class="username"><a href="${ctp}/member/userPage/${mVo.mid}">${mVo.mid}</a></p>
 	                    <p class="sub-text">${mVo.name}</p>
 	                </div>
 	                <button class="action-btn float-right" onclick="alert('준비중이에요ㅠ')">팔로우</button>
@@ -518,58 +358,6 @@
     </div>
     </section>
     <!-- right Sidebar Section End -->
-    
-    <!-- 게시글을 등록하기위한 첫 모달창(이미지 입력) --> 
-    <div class="modal fade " id="post-add-modal">
-        <span>
-	        <button type="button" class="close m-4 modal_close" data-dismiss="modal"><font size="15pt" color="#fff">&times;</font></button>
-        </span>
-        <div class="modal-dialog modal-xl modal-dialog-centered rounded-3">
-            <div class="modal-content">
-            	<div class="modal-header">
-            		<font size="3pt" class="modal-title col-12 text-center"><b>새 게시물 만들기</b></font>
-            	</div>
-            	<!-- 모달내부에서 폼 입력하기 -->
-                <div class="modal-body">
-                    <form id="myform" method="post" action="${ctp}/post/postUpload" enctype="multipart/form-data">
-                    	<table class="table table-borderless modaltable w-100 h-100">
-                    		<tr class="h-100">
-                    			<td class="col-8 h-100">
-                    				<div class="text-center d-flex flex-column" id="modalDemo">
-			                    		<div style="margin-top:120px;">
-			                    			<i class="ri-image-add-line" style="font-size:80pt"></i>
-			                    		</div>
-										<p><font size="5pt">사진 파일을 여기에 업로드하세요</font></p>
-			                    		<input type="button" style="width:135px;" class="btn btn-primary btn-sm mx-auto" onclick="clickFilebtn()" value="컴퓨터에서 선택" />
-									</div>
-									<input style="display:none;" type="file" value="컴퓨터에서 선택" name="files" id="files" multiple />
-                    			</td>
-                    			<td class="col-4">
-                    				<div class="profile-card">
-						                <div class="profile-pic">
-						                    <img src="${ctp}/images/noprofile.png" alt="내 프로필사진">
-						                </div>
-						                <div>
-						                    <p class="username">${sMid}</p>
-						                    <p class="sub-text">${sName}</p>
-						                    <input type="hidden" name="mid" id="mid" value="${sMid}"/>
-						                    <input type="hidden" name="name" id="name" value="${sName}"/>
-						                    <input type="hidden" name="fileSize" id="fileSize" />
-						                    <input type="hidden" name="hostIp" id="hostIp" value="${pageContext.request.remoteAddr}"/>
-						                </div>
-						            </div>
-		                    		<textarea rows="10" name="content" id="content" placeholder="내용을 입력하세요..." class="form-control" style="resize:none; border:none;"></textarea>
-		                            <div class="hr-sect"><b>준비되셨나요?</b></div>
-		                            <button type="button" onclick="fCheck()" class="btn btn-light float-right d-inline-flex align-items-center"><i class="ri-upload-2-fill" title="게시하기"></i><span class="btntext ml-2">게시하기</span></button>
-                    			</td>
-                    		</tr>
-                    	</table>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- create Post Modal End  -->
 
 
     <!-- Edit Modal Start -->

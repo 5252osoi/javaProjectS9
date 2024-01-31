@@ -18,5 +18,11 @@ public interface MemberDAO {
 
 	public int setPostCnt();
 
+	public int setUserFollow(@Param("follower")String follower, @Param("followee") String followee);
+
+	public int setUserFollowUpdate();
+
+	public int setUserFolloweeUpdate();
+
 	
 }

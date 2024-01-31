@@ -16,4 +16,10 @@ public interface MemberService {
 
 	public int setPostCnt();
 
+	public int setUserFollow(String follower, String followee);
+
+	public int setUserFollowUpdate();
+
+	public int setUserFolloweeUpdate();
+
 }

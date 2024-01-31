@@ -36,4 +36,12 @@ public interface PostService {
 
 	public List<PostVO> getUserPagePost(String mid);
 
+	public int setPostReplyCnt();
+
+	public PostVO getShowPostInfo(int idx);
+
+	public List<PostReplyVO> getShowPostReply(int idx);
+
+	public PostLikeVO getShowPostLikeCheck(String mid, int idx);
+
 }

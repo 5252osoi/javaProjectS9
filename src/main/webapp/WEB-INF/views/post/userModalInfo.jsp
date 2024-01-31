@@ -5,7 +5,7 @@
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 
 <div class="w-100 h-100 m-0 p-0">
-	<div class="profile-card pl-1 pt-1">
+	<div class="profile-card pl-1">
     	<div class="profile-pic">
 			<a id="profile-pic-onclick" href="#">
 				<img src="${ctp}/images/noprofile.png" title="프로필 사진을 변경하려면 클릭하세요" alt="내 프로필사진">
@@ -19,7 +19,7 @@
     </div>
     <div class="info-container d-flex justify-content-around text-center" style="height:65px; width:100%; ">
     	<div>
-    		<p class="username"></p>
+    		<p class="username">${mvo.post}</p>
     		<p class="sub-text">게시물</p>
     	</div>
     	<div>
@@ -37,7 +37,7 @@
 			<c:forEach var="imageName" items="${fn:split(vo.FSName, '/')}" varStatus="st">
 			    <c:if test="${st.first}">
 			        <!-- 첫 번째 이미지만 썸네일로 출력 -->
-			        <div style="height: 120px; width: 120px;" object-fit: contain;">
+			        <div class="pt-0" style="height: 120px; width: 120px;" object-fit: contain;">
 			            <img src="${ctp}/severPostImg/${imageName}" style="height: 120px; width:120px; object-fit: contain" class="d-block" alt="${imageName}">
 			        </div>
 			    </c:if>
@@ -45,8 +45,10 @@
 		</c:forEach>
 	</div>
 	<!--  -->
-	<div class="d-flex justify-content-center mt-2">
-		<button type="button" class="btn btn-primary mr-1">&nbsp 팔로우 &nbsp </button>
+	<div class="d-flex justify-content-center mt-1 mb-1">
+		<c:if test="${sMid!=mvo.mid}">
+			<button type="button" onclick="userFollow(${mvo.mid})" class="btn btn-primary mr-1">&nbsp 팔로우 &nbsp </button>
+		</c:if>
 		<button type="button" class="btn btn-secondary ml-1" data-dismiss="modal">&nbsp 닫기 &nbsp </button>
 	</div>
 </div>

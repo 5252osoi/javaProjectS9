@@ -199,6 +199,7 @@ public class PostController {
 		int res=0;
 		res = postService.setPostAndReplyDelete(idx);
 		if (res!=0) {
+			//해당 포스트에 달려있는 댓글도 모두 삭제
 			res = postService.setPostDelete(idx);
 		}
 		
@@ -221,6 +222,9 @@ public class PostController {
 		String mid = (String) session.getAttribute("sMid");
 		System.out.println("(댓글작성)게시글번호 : "+postIdx+" / 댓글내용 : " +content );
 		res = postService.setPostReplyInput(postIdx,mid,hostIp,content);
+		if(res!=0) {
+			res=postService.setPostReplyCnt();
+		}
 		return res+"";
 	}
 	//리플삭제
@@ -230,6 +234,9 @@ public class PostController {
 		int res=0;
 		System.out.println("댓글idx : "+idx );
 		res = postService.setPostReplyDelete(idx);
+		if(res!=0) {
+			res=postService.setPostReplyCnt();
+		}
 		return res+"";
 	}
 	//좋아요버튼
@@ -254,6 +261,7 @@ public class PostController {
 		}
 		return res+"";
 	}
+	
 	//hover로 모달창출력
 	@ResponseBody
 	@RequestMapping(value ="/userModalInfo",method = RequestMethod.POST)
@@ -269,6 +277,27 @@ public class PostController {
 		model.addAttribute("pvos",pvos);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/post/userModalInfo");
+		return mav;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/showPostInfo",method = RequestMethod.POST)
+	public ModelAndView showPostInfoPost(Model model, HttpSession session ,int idx) {
+		String mid = (String) session.getAttribute("sMid");
+		System.out.println("idx 받아온값 (showPostInfo) : " + idx);
+		PostVO vo = postService.getShowPostInfo(idx);
+		List<PostReplyVO> rvos = postService.getShowPostReply(idx);
+		PostLikeVO lvo = postService.getShowPostLikeCheck(mid,idx);
+		
+		model.addAttribute("vo",vo);
+		model.addAttribute("rVos",rvos);
+		model.addAttribute("lVo",lvo);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/post/showPostInfo");
+		mav.addObject("vo",vo);
+		mav.addObject("rVos",rvos);
+		mav.addObject("lVo",lvo);
+		
 		return mav;
 	}
 	

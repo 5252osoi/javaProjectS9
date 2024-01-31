@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,15 +51,33 @@ public class MemberController {
 		
 		return res+"";
 	}
+
+	@ResponseBody
+	@RequestMapping(value ="/userFollow",method = RequestMethod.POST)
+	public String  userFollowPost(String follower,String followee) {
+		int res=0;
+		//follower=로그인한유저 /followee=팔로우할유저
+		res=memberService.setUserFollow(follower,followee);
+		if(res!=0) {
+			res=memberService.setUserFollowUpdate();
+			if(res!=0) {
+				res=memberService.setUserFolloweeUpdate();
+			}
+		}
+		return res+"";
+	}
 	
 	@RequestMapping(value = "/userPage",method = RequestMethod.GET)
-	public String userPageGet(String mid) {
+	public String userPageGet(Model model, String mid) {
 		
+		MemberVO mvo = memberService.getMemberIdCheck(mid);
 		List<PostVO> vos = postService.getUserPagePost(mid);
+		
+		model.addAttribute("mvo", mvo);
+		model.addAttribute("vos",vos);
 		
 		return "member/userPage";
 	}
-	
 	
 	
 }

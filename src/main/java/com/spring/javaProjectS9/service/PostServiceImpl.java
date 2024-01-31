@@ -90,5 +90,25 @@ public class PostServiceImpl implements PostService {
 	public List<PostVO> getUserPagePost(String mid) {
 		return postDAO.getUserPagePost(mid);
 	}
+
+	@Override
+	public int setPostReplyCnt() {
+		return postDAO.setPostReplyCnt();
+	}
+
+	@Override
+	public PostVO getShowPostInfo(int idx) {
+		return postDAO.getShowPostInfo(idx);
+	}
+
+	@Override
+	public List<PostReplyVO> getShowPostReply(int idx) {
+		return postDAO.getShowPostReply(idx);
+	}
+
+	@Override
+	public PostLikeVO getShowPostLikeCheck(String mid, int idx) {
+		return postDAO.getShowPostLikeCheck(mid,idx);
+	}
 	
 }

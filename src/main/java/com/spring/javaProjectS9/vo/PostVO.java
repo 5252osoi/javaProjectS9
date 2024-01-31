@@ -18,6 +18,7 @@ public class PostVO {
 	private String hostIp;
 	private String openSw;
 	private int likes;
+	private int reply;
 	private String WDate;
 	
 	private String date_diff;

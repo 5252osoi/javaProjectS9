@@ -13,8 +13,21 @@
 				                    <div class="profile-pic">
 				                        <img src="${ctp}/images/noprofile.png" alt="photo">
 				                    </div>
-				                    <p class="username"><a href="#">${vo.mid}</a></p>
+				                    <p class="username" data-toggle="userModal-${vo.mid}" data-target="#userModal-${vo.mid}">${vo.mid}</p>
 				                </div>
+				                <!-- forEach문 안에 모달창을 만들어놔야 동적으로 사용할 수 있음 -->
+							    <!-- 사용자에 대한 모달 -->
+							    <div class="modal fade" id="userModal-${vo.mid}" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+							        <div class="modal-dialog" role="document">
+							            <div class="modal-content">
+							                <div class="modal-body">
+							                    <!-- 해당 사용자에 대한 내용 -->
+							                    <p>${vo.mid}님에 관련된 내용입니다.</p>
+							                </div>
+							            </div>
+							        </div>
+							    </div>		
+							    <!-- 사용자 모달 종료 -->
 				                <!-- 작성자아이디 = 세션아이디 일때 수정,삭제기능 -->
 				                <c:if test="${sMid==vo.mid || sMid=='admin'}">
 					                <div class="dropdown">
@@ -31,26 +44,25 @@
 				                </c:if>
 				                <!--  -->
 				            </div>
-				            <!-- <img src="${ctp}/severPostImg/${vo.FSName}" style="object-fit:contain" class="post-image" alt="${vo.FName}"> -->
-				<!-- 이미지파일 이름을 /로 분리하고 슬라이드 표시 -->
-                <div id="imageCarousel-${vo.idx}" style="object-fit:contain" class="carousel slide mt-2 post-image" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <c:forEach var="imageName" items="${fn:split(vo.FSName, '/')}" varStatus="st">
-                            <div class="carousel-item${st.index == 0 ? ' active' : ''}">
-                                <img src="${ctp}/severPostImg/${imageName}" style="max-height: 300px; object-fit: contain" class="d-block w-100" alt="${imageName}">
-                            </div>
-                        </c:forEach>
-                    </div>
-                    <a class="carousel-control-prev" href="#imageCarousel-${vo.idx}" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">이전</span>
-                    </a>
-                    <a class="carousel-control-next" href="#imageCarousel-${vo.idx}" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">다음</span>
-                    </a>
-                </div>	
-                <!-- 슬라이드종료 -->	            
+								<!-- 이미지파일 이름을 /로 분리하고 슬라이드 표시(carousel로표시) -->
+				                <div id="imageCarousel-${vo.idx}" style="object-fit:contain" class="carousel slide mt-2" data-interval="false" data-ride="carousel">
+				                    <div class="carousel-inner" style="object-fit:contain">
+				                        <c:forEach var="imageName" items="${fn:split(vo.FSName, '/')}" varStatus="st">
+				                            <div class="carousel-item${st.index == 0 ? ' active' : ''}" style="height: 500px; object-fit: contain;">
+				                                <img src="${ctp}/severPostImg/${imageName}" style="max-height: 500px; object-fit: contain" class="d-block" alt="${imageName}">
+				                            </div>
+				                        </c:forEach>
+				                    </div>
+				                    <a class="carousel-control-prev" href="#imageCarousel-${vo.idx}" role="button" data-slide="prev">
+				                        <span class="carousel-control-prev-icon text-secondary" aria-hidden="true"></span>
+				                        <span class="sr-only">이전</span>
+				                    </a>
+				                    <a class="carousel-control-next" href="#imageCarousel-${vo.idx}" role="button" data-slide="next">
+				                        <span class="carousel-control-next-icon text-secondary" aria-hidden="true"></span>
+				                        <span class="sr-only">다음</span>
+				                    </a>
+				                </div>	
+				                <!-- 슬라이드종료 -->	            
 				            <div class="post-content p-0 mt-4">
 				                <div class="reaction-wrapper d-flex">
 				                	<!-- 좋아요버튼 -->
@@ -74,7 +86,7 @@
 				                </div>
 				                <p class="likes text-start"><c:if test="${vo.likes!=0}">좋아요 ${vo.likes} 개</c:if></p>
 					            <span class="description">
-					            	<a href="#"><b>${vo.mid}</b></a>
+					            	<a href="${ctp}/member/userPage/${vo.mid}"><b>${vo.mid}</b></a>
 					            	${fn:replace(vo.content,newLine,'<br/>')}
 					            </span>
 				                <p class="post-time">${fn:substring(vo.WDate,0,11)}</p>
@@ -84,7 +96,7 @@
 				            		<c:if test="${rVo.postIdx==vo.idx}">
 				            		<!-- 댓글 -->
 					            		<div class="description w-100 p-0 m-0">
-				            				<a href="#"><b>${rVo.mid}</b></a>
+				            				<a href="${ctp}/member/userPage/${rVo.mid}"><b>${rVo.mid}</b></a>
 				            				${fn:replace(rVo.content,newLine,'<br/>')}
 				            				<!-- 댓글 삭제권한 (댓글작성자,게시글작성자,운영자) -->
 				            				<c:if test="${sMid==vo.mid || sMid=='admin' || sMid==rVo.mid}">

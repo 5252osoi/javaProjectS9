@@ -39,4 +39,19 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.setPostCnt();
 	}
 
+	@Override
+	public int setUserFollow(String follower, String followee) {
+		return memberDAO.setUserFollow(follower,followee);
+	}
+
+	@Override
+	public int setUserFollowUpdate() {
+		return memberDAO.setUserFollowUpdate();
+	}
+
+	@Override
+	public int setUserFolloweeUpdate() {
+		return memberDAO.setUserFolloweeUpdate();
+	}
+
 }

@@ -39,6 +39,14 @@ public interface PostDAO {
 
 	public List<PostVO> getUserPagePost(@Param("mid") String mid);
 
+	public int setPostReplyCnt();
+
+	public PostVO getShowPostInfo(@Param("idx") int idx);
+
+	public List<PostReplyVO> getShowPostReply(@Param("idx") int idx);
+
+	public PostLikeVO getShowPostLikeCheck(@Param("mid") String mid, @Param("idx") int idx);
+
 	
 
 }
