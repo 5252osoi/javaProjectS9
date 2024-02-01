@@ -82,7 +82,71 @@
 	    		myform.submit();
 	    	}
 	    }
-
+		
+		//모달 내부에서 파일넣기 버튼을 누르면 hidden속에있는 파일 버튼넣어짐
+		function clickFilebtn(){
+			document.getElementById('files').click();
+		}
+		
+		//모달창이 닫힐때 안에 있는 내용 초기화하기(새로고침)
+		$(document).ready(function(){
+			$('.modal').on('hidden.bs.modal', function () {
+				location.reload();
+			});
+		});
+		
+		//파일을 넣으면 모달창에 이미지 띄우기
+	    $(function(){
+	    	$("#files").on("change", function(e){
+	    		// 그림파일 체크
+	    		let files = e.target.files;
+	    		let filesArr = Array.prototype.slice.call(files);
+	    		
+	    		//console.log('filesArr',filesArr);
+	    		
+	    		filesArr.forEach(function(f){
+	    			if(!f.type.match("image.*")) {
+	    				alert("업로드할 파일은 이미지파일만 가능합니다.");
+	    			}
+	    		});
+	    		
+	    		// 멀티파일 이미지 미리보기
+	    		let i = e.target.files.length;
+	    		//들어온 파일의 갯수가 null이 아니면 #modalDemo안의 내용을 지우고 다시 출력
+	    		if(i!=null){
+					let strDemo='';
+	    			strDemo+='<div class="w3-content w3-display-container d-inline-flex align-items-center" style="overflow:auto; height:655px;"> ';
+	    			strDemo+='<div class="w-100 h-100" id="mdlDemo" >';
+	    			strDemo+='</div>';
+	    			strDemo+='</div>';
+	    			
+	    			$('#modalDemo').html(strDemo);
+	    			
+		    		for(let image of files) {
+						let img = document.createElement("img");
+		    			let reader = new FileReader();
+		    			reader.onload = function(e) {
+		    				img.setAttribute("src", e.target.result);
+		    				//img.setAttribute("width", 700);
+		    			}
+		    			reader.readAsDataURL(e.target.files[--i]);
+		    			document.querySelector("#mdlDemo").append(img);
+		    		}
+	    		}
+	    	});
+	    });
+		
+	    function editPost(idx,content) {
+	    	$("#edit-modal #idx").val(idx);
+	    	$("#edit-modal #content").val(content);
+	    	console.log(idx);
+	    }; 
+	    
+	    
+	    function editSubmit(){
+			document.getElementById("editForm").submit();
+	    };
+	    
 	    //포스트 삭제
 	    function deletePost(idx){
 	    	let ans = confirm("이 게시물을 삭제하시겠어요?");
@@ -110,7 +174,7 @@
 	  	    $('.carousel').carousel();
 	  	});
 	  	
-		 // 사용자 이름에 hover 이벤트 추가 (동적으로 바인딩)
+		 // username에 hover 이벤트 추가
 	  	$(document).on('mouseenter', '.username', function (e) {
 	  	    // 해당 사용자에 대한 모달 내용 업데이트
 	  	    var userId = $(this).text();

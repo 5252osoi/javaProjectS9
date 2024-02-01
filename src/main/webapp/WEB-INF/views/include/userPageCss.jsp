@@ -52,7 +52,7 @@
 		  clip: rect(1px, 1px, 1px, 1px);
 		}
 		
-		/* Profile Section */
+		/* 프로필 */
 		
 		.profile {
 		  padding: 5rem 0;
@@ -137,7 +137,7 @@
 		  font-weight: 600;
 		}
 		
-		/* Gallery Section */
+		/* 갤러리부분 */
 		
 		.gallery {
 		  display: flex;

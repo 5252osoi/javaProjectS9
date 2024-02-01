@@ -52,7 +52,7 @@
 	
 	
 	<insert id="setPostUpload">
-		INSERT INTO posting2 VALUES(default,#{vo.mid},#{vo.FName},#{vo.FSName},#{vo.FSize},#{vo.content},#{vo.hostIp},default,default,default) ;
+		INSERT INTO posting2 VALUES(default,#{vo.mid},#{vo.FName},#{vo.FSName},#{vo.FSize},#{vo.content},#{vo.hostIp},default,default,default,default) ;
 	</insert>
 	
 	<insert id="setPostReplyInput">

@@ -75,10 +75,10 @@
 					                		<c:set var="like" value="true"/>
 				                		</c:if>
 					     				<c:if test="${like eq false}">
-						     				<button class="btn btn-sm btn-light btn-main" onclick="likePlus('${vo.idx}')"><i class="ri-heart-line m-1"></i></button>
+						     				<button class="btn btn-sm btn-light btn-main" onclick="likePlus(${vo.idx})"><i class="ri-heart-line m-1"></i></button>
 					     				</c:if>
 					     				<c:if test="${like eq true}">
-						     				<button class="btn btn-sm btn-light btn-main" onclick="likeMinus('${vo.idx}')"><font color="red"><i class="ri-heart-fill m-1"></i></font></button>
+						     				<button class="btn btn-sm btn-light btn-main" onclick="likeMinus(${vo.idx})"><font color="red"><i class="ri-heart-fill m-1"></i></font></button>
 					     				</c:if>
 					                    
 					                    <button class="btn btn-sm btn-light btn-main" onclick="replyCheck(${vo.idx})"><i class="ri-chat-3-line m-1"></i></button>
@@ -96,3 +96,4 @@
                    		</tr>
                    	</table>
     <!-- create Post Modal End  -->
+    

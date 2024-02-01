@@ -10,6 +10,7 @@ create table posting2 (
 	hostIp	varchar(50) not null,			/*작성자IP*/
 	openSw	char(6) default	'공개',			/*게시글 공개설정*/
 	likes	int default 0,					/*좋아요 수*/
+	reply	int default 0,					/*댓글 수*/
 	WDate	datetime default now(),			/*작성일*/
 	foreign key(mid) references member2(mid),
 	primary key(idx)

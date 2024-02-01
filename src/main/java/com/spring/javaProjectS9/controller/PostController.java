@@ -138,7 +138,7 @@ public class PostController {
 			RedirectAttributes redirectAttributes ) {
 		
 		int res = 0;
-		
+		System.out.println("넘어온 vo : "+vo);
 		//파일 넘어오는지 확인할거임
 		if(!files.isEmpty()) {
 			System.out.println("포스트업로드-파일이 있음");

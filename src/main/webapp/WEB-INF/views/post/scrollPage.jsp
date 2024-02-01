@@ -5,7 +5,7 @@
 
 
 
-                 	<!-- scrollPage.jsp와 같이 사용하는부분 -->
+                	<!-- scrollPage.jsp와 같이 사용하는부분 -->
                 	<c:forEach var="vo" items="${vos}" varStatus="st">
 		            	<div class="post">
 				            <div class="info">
@@ -86,7 +86,7 @@
 				                </div>
 				                <p class="likes text-start"><c:if test="${vo.likes!=0}">좋아요 ${vo.likes} 개</c:if></p>
 					            <span class="description">
-					            	<a href="${ctp}/member/userPage/${vo.mid}"><b>${vo.mid}</b></a>
+					            	<a href="${ctp}/member/userPage?mid=${vo.mid}"><b>${vo.mid}</b></a>
 					            	${fn:replace(vo.content,newLine,'<br/>')}
 					            </span>
 				                <p class="post-time">${fn:substring(vo.WDate,0,11)}</p>
@@ -96,7 +96,7 @@
 				            		<c:if test="${rVo.postIdx==vo.idx}">
 				            		<!-- 댓글 -->
 					            		<div class="description w-100 p-0 m-0">
-				            				<a href="${ctp}/member/userPage/${rVo.mid}"><b>${rVo.mid}</b></a>
+				            				<a href="${ctp}/member/userPage?mid=${rVo.mid}"><b>${rVo.mid}</b></a>
 				            				${fn:replace(rVo.content,newLine,'<br/>')}
 				            				<!-- 댓글 삭제권한 (댓글작성자,게시글작성자,운영자) -->
 				            				<c:if test="${sMid==vo.mid || sMid=='admin' || sMid==rVo.mid}">
