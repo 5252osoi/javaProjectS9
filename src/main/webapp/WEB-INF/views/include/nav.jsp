@@ -80,13 +80,30 @@
 	    //유저팔로우
 		function userFollow(mid){
 	    	$.ajax({
-	    		url  : "member/userFollow",
+	    		url  : "${ctp}/member/userFollow",
 	    		type : "post",
-	    		data : {follower:'${smid}',
+	    		data : {follower :'${sMid}',
 	    				followee : mid
 	    		},
 	    		success:function(res) {
 	    			if(res == "0") alert('팔로우실패 ');
+	    			else location.reload();
+	    		},
+	    		error : function() {
+	    			alert("전송 오류!!");
+	    		}
+	    	});
+		}
+	    //유저언팔로우
+		function userUnFollow(mid){
+	    	$.ajax({
+	    		url  : "${ctp}/member/userUnFollow",
+	    		type : "post",
+	    		data : {follower :'${sMid}',
+	    				followee : mid
+	    		},
+	    		success:function(res) {
+	    			if(res == "0") alert('언팔로우실패 ');
 	    			else location.reload();
 	    		},
 	    		error : function() {

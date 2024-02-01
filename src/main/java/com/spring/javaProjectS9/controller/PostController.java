@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.javaProjectS9.service.MemberService;
 import com.spring.javaProjectS9.service.PostService;
+import com.spring.javaProjectS9.vo.FollowVO;
 import com.spring.javaProjectS9.vo.MemberVO;
 import com.spring.javaProjectS9.vo.PostLikeVO;
 import com.spring.javaProjectS9.vo.PostReplyVO;
@@ -56,8 +57,8 @@ public class PostController {
 		//게시글리스트 5개
 		List<PostVO> vos = postService.getPostList(startIdxNo,pageSize);
 		
-		//가져온 vos 안에있는 VO의 FSName과 FName의 이름들을 utf-8로 인코딩해서 보내줘야함
-		
+		//로그인한사람의 팔로우목록
+		List<FollowVO> fvos=memberService.getFollowCheck(sMid);
 		
 		//게시글에 좋아요 여부 체크
 		List<PostLikeVO> lVos = postService.getCheckLike(startIdxNo,pageSize,sMid);
@@ -82,6 +83,7 @@ public class PostController {
 		
 		
 		model.addAttribute("vos",vos);
+		model.addAttribute("fvos",fvos);
 		model.addAttribute("mVos",mVos);
 		model.addAttribute("rmVos",rmVos);
 		model.addAttribute("lVos",lVos);
@@ -271,10 +273,11 @@ public class PostController {
 		
 		//mid로 검색한뒤 최근게시글을 3개까지 가져옴(첫 이미지만 3개씀)
 		List<PostVO> pvos = postService.getUserModalInfo(mid);
-
+		List<FollowVO> fvos=memberService.getFollowCheck(mid);
 		//modelAndView에 담아서 보낸다음 .html로 출력하는방식
 		model.addAttribute("mvo",mvo);
 		model.addAttribute("pvos",pvos);
+		model.addAttribute("fvos",fvos);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/post/userModalInfo");
 		return mav;

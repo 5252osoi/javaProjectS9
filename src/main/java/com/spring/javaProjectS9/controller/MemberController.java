@@ -2,6 +2,9 @@ package com.spring.javaProjectS9.controller;
 
 import java.util.List;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.javaProjectS9.service.MemberService;
 import com.spring.javaProjectS9.service.PostService;
+import com.spring.javaProjectS9.vo.FollowVO;
 import com.spring.javaProjectS9.vo.MemberVO;
 import com.spring.javaProjectS9.vo.PostVO;
 
@@ -51,13 +55,30 @@ public class MemberController {
 		
 		return res+"";
 	}
-
+	//팔로우
 	@ResponseBody
 	@RequestMapping(value ="/userFollow",method = RequestMethod.POST)
 	public String  userFollowPost(String follower,String followee) {
 		int res=0;
 		//follower=로그인한유저 /followee=팔로우할유저
+		System.out.println("로그인중 유저 : "+follower+", 팔로우 할 유저 : "+followee);
 		res=memberService.setUserFollow(follower,followee);
+		System.out.println("결과 : "+res);
+		if(res!=0) {
+			res=memberService.setUserFollowUpdate();
+			if(res!=0) {
+				res=memberService.setUserFolloweeUpdate();
+			}
+		}
+		return res+"";
+	}
+	//언팔로우
+	@ResponseBody
+	@RequestMapping(value ="/userUnFollow",method = RequestMethod.POST)
+	public String  userUnFollowPost(String follower,String followee) {
+		int res=0;
+		//follower=로그인한유저 /followee=팔로우할유저
+		res=memberService.setUserUnFollow(follower,followee);
 		if(res!=0) {
 			res=memberService.setUserFollowUpdate();
 			if(res!=0) {
@@ -68,14 +89,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/userPage",method = RequestMethod.GET)
-	public String userPageGet(Model model, String mid) {
-		
+	public String userPageGet(Model model,HttpSession session, String mid) {
+		String sMid = (String) session.getAttribute("sMid");
 		MemberVO mvo = memberService.getMemberIdCheck(mid);
 		List<PostVO> vos = postService.getUserPagePost(mid);
-		
+		List<FollowVO> fvos=memberService.getFollowCheck(sMid);
 		model.addAttribute("mvo", mvo);
 		model.addAttribute("vos",vos);
-		
+		model.addAttribute("fvos",fvos);
 		return "member/userPage";
 	}
 	

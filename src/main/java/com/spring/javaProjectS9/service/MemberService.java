@@ -2,6 +2,7 @@ package com.spring.javaProjectS9.service;
 
 import java.util.List;
 
+import com.spring.javaProjectS9.vo.FollowVO;
 import com.spring.javaProjectS9.vo.MemberVO;
 
 public interface MemberService {
@@ -21,5 +22,9 @@ public interface MemberService {
 	public int setUserFollowUpdate();
 
 	public int setUserFolloweeUpdate();
+
+	public List<FollowVO> getFollowCheck(String mid);
+
+	public int setUserUnFollow(String follower, String followee);
 
 }

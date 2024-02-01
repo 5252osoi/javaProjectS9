@@ -11,7 +11,9 @@
 	<select id="getRanRecommendUser" resultType="com.spring.javaProjectS9.vo.MemberVO">
 		select * from member2 where mid!=#{sMid} order by idx desc,rand() limit 7;
 	</select>
-	
+	<select id="getFollowCheck" resultType="com.spring.javaProjectS9.vo.FollowVO">
+		SELECT * FROM follower2 WHERE followerMid=#{mid};
+	</select>
 	
 	
 	<insert id="setMemberJoinOk">
@@ -27,10 +29,16 @@
 		UPDATE member2 m SET m.post=(SELECT COUNT(p.mid) FROM posting2 p WHERE p.mid=m.mid);
 	</update>
 	<update id="setUserFollowUpdate">
-		UPDATE member2 m SET m.follow=(SELECT COUNT(f.follower) FROM follower2 f WHERE f.followerMid=m.mid);
+		UPDATE member2 m SET m.follow=(SELECT COUNT(f.followerMid) FROM follower2 f WHERE f.followerMid=m.mid);
 	</update>
 	<update id="setUserFolloweeUpdate">
 		UPDATE member2 m SET m.follower=(SELECT COUNT(f.followeeMid) FROM follower2 f WHERE f.followeeMid=m.mid);
 	</update>
+	
+	
+	
+	<delete id="setUserUnFollow">
+		DELETE FROM follower2 WHERE followerMid=#{follower} AND followeeMid=#{followee};
+	</delete>
 	
 </mapper>

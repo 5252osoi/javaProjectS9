@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.javaProjectS9.vo.FollowVO;
 import com.spring.javaProjectS9.vo.MemberVO;
 
 public interface MemberDAO {
@@ -19,10 +20,14 @@ public interface MemberDAO {
 	public int setPostCnt();
 
 	public int setUserFollow(@Param("follower")String follower, @Param("followee") String followee);
+	
+	public int setUserUnFollow(@Param("follower")String follower, @Param("followee") String followee);
 
 	public int setUserFollowUpdate();
 
 	public int setUserFolloweeUpdate();
+
+	public List<FollowVO> getFollowCheck(@Param("mid") String mid);
 
 	
 }

@@ -26,6 +26,9 @@ public class MessageController {
 		} else if(msgFlag.equals("memberJoinNo")) {
 			model.addAttribute("msg", "회원가입실패");
 			model.addAttribute("url", "member/join");
+		} else if(msgFlag.equals("needLogin")) {
+			model.addAttribute("msg", "로그인이 필요합니다.");
+			model.addAttribute("url", "/");
 		} else if(msgFlag.equals("postUploadOk")) {
 			model.addAttribute("msg", "포스트작성완료");
 			model.addAttribute("url", "post/main");

@@ -66,19 +66,19 @@
 					            	</c:forEach>
 					            </div>
 				            	<hr/>
-				            	<div id="footer" style="position: sticky; bottom: 0;">
+				            	<div id="footer">
 						            <div class="reaction-wrapper d-flex">
 					                	<!-- 좋아요버튼 -->
-					                	<c:set var="like" value="false"/>
 				                		<!-- lVo(좋아요에있는 postIDX와 게시글의 IDX가 같으면 like=true 로 체크) -->
+					                	<c:set var="like" value="false"/>
 				                		<c:if test="${vo.idx==lVo.postIdx}">
 					                		<c:set var="like" value="true"/>
 				                		</c:if>
 					     				<c:if test="${like eq false}">
-						     				<button class="btn btn-sm btn-light btn-main" onclick="likePlus(${vo.idx})"><i class="ri-heart-line m-1"></i></button>
+						     				<button class="btn btn-sm btn-light btn-main" onclick="likePlus('${vo.idx}')"><i class="ri-heart-line m-1"></i></button>
 					     				</c:if>
 					     				<c:if test="${like eq true}">
-						     				<button class="btn btn-sm btn-light btn-main" onclick="likeMinus(${vo.idx})"><font color="red"><i class="ri-heart-fill m-1"></i></font></button>
+						     				<button class="btn btn-sm btn-light btn-main" onclick="likeMinus('${vo.idx}')"><font color="red"><i class="ri-heart-fill m-1"></i></font></button>
 					     				</c:if>
 					                    
 					                    <button class="btn btn-sm btn-light btn-main" onclick="replyCheck(${vo.idx})"><i class="ri-chat-3-line m-1"></i></button>
