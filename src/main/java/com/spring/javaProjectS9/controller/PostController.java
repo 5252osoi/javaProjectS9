@@ -1,8 +1,8 @@
 package com.spring.javaProjectS9.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -150,21 +150,28 @@ public class PostController {
 			//경로확인하기
 			System.out.println("포스트업로드-경로확인 : "+dir);
 			
-			Path path = Path.of(dir);
-			if(Files.notExists(path)) {
-				Files.createDirectories(path);
-			}
+			
+//			Path path = Path.of(dir);
+//			if(Files.notExists(path)) {
+//				Files.createDirectories(path);
+//			}
+			
+			File path = new File(dir);
+			if(!path.exists()) path.mkdirs();
+			
 			List<String> originalFileNames = new ArrayList<>();
             List<String> systemFileNames = new ArrayList<>();
 			
 			
-			 for (MultipartFile file : files) {
+			for (MultipartFile file : files) {
                 if (!file.isEmpty()) {
 					// 각각 파일 저장
 					String originalFileName = file.getOriginalFilename();
                     String systemFileName = (UUID.randomUUID().toString()).substring(0,8) + originalFileName;
-                    Path dest = path.resolve(systemFileName);
-                    Files.copy(file.getInputStream(), dest);
+                    //Path dest = path.resolve(systemFileName);
+                    //Files.copy(file.getInputStream(), dest);
+                    
+                    writeFile(file, systemFileName);
                     
                     //리스트에 파일정보추가
                     originalFileNames.add(originalFileName);
@@ -191,6 +198,18 @@ public class PostController {
 		else return "redirect:/message/postUploadNo";
 	}
 	
+	private void writeFile(MultipartFile fName, String sFileName) throws IOException {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+		String realPath = request.getSession().getServletContext().getRealPath("/resources/data/post/");
+		
+		FileOutputStream fos = new FileOutputStream(realPath + sFileName);
+		if((fName.getBytes().length) != -1) {
+			fos.write(fName.getBytes());
+		}
+		fos.flush();
+		fos.close();
+	}
+	
 	//포스트삭제
 	@ResponseBody
 	@RequestMapping(value = "/postDelete",method = RequestMethod.POST)
@@ -199,12 +218,12 @@ public class PostController {
 		System.out.println("넘어온 idx(포스트삭제) : " +idx);
 
 		int res=0;
-		res = postService.setPostAndReplyDelete(idx);
-		if (res!=0) {
-			//해당 포스트에 달려있는 댓글도 모두 삭제
-			res = postService.setPostDelete(idx);
-		}
+		//해당 포스트에 달려있는 댓글,좋아요도 모두 삭제
+		postService.setLikeDelete(idx);
+		postService.setPostAndReplyDelete(idx);
+		res = postService.setPostDelete(idx);
 		
+		memberService.setPostCnt();
 		return res+"";
 	}
 	//포스트수정
@@ -225,7 +244,7 @@ public class PostController {
 		System.out.println("(댓글작성)게시글번호 : "+postIdx+" / 댓글내용 : " +content );
 		res = postService.setPostReplyInput(postIdx,mid,hostIp,content);
 		if(res!=0) {
-			res=postService.setPostReplyCnt();
+			postService.setPostReplyCnt();
 		}
 		return res+"";
 	}
@@ -237,7 +256,7 @@ public class PostController {
 		System.out.println("댓글idx : "+idx );
 		res = postService.setPostReplyDelete(idx);
 		if(res!=0) {
-			res=postService.setPostReplyCnt();
+			postService.setPostReplyCnt();
 		}
 		return res+"";
 	}
@@ -248,7 +267,7 @@ public class PostController {
 		int res=0;
 		res=postService.setLikePlus(idx,mid);
 		if(res!=0) {
-			res=postService.setEditLikes();
+			postService.setEditLikes();
 		}
 		return res+"";
 	}
@@ -259,7 +278,7 @@ public class PostController {
 		int res=0;
 		res=postService.setLikeMinus(idx,mid);
 		if(res!=0) {
-			res=postService.setEditLikes();
+			postService.setEditLikes();
 		}
 		return res+"";
 	}
@@ -267,13 +286,13 @@ public class PostController {
 	//hover로 모달창출력
 	@ResponseBody
 	@RequestMapping(value ="/userModalInfo",method = RequestMethod.POST)
-	public ModelAndView userModalInfoPost(Model model, String mid) {
-		
+	public ModelAndView userModalInfoPost(Model model, HttpSession session, String mid) {
+		String sMid = (String) session.getAttribute("sMid");
 		MemberVO mvo = memberService.getMemberIdCheck(mid);
 		
 		//mid로 검색한뒤 최근게시글을 3개까지 가져옴(첫 이미지만 3개씀)
 		List<PostVO> pvos = postService.getUserModalInfo(mid);
-		List<FollowVO> fvos=memberService.getFollowCheck(mid);
+		List<FollowVO> fvos=memberService.getFollowCheck(sMid);
 		//modelAndView에 담아서 보낸다음 .html로 출력하는방식
 		model.addAttribute("mvo",mvo);
 		model.addAttribute("pvos",pvos);

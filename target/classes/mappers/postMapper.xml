@@ -94,6 +94,10 @@
 		DELETE FROM postLike2 WHERE postIdx = #{idx} AND mid = #{mid};
 	</delete>
 	
+	<delete id="setLikeDelete">
+		DELETE FROM postLike2 WHERE postIdx = #{idx};
+	</delete>
+	
 	
 	
 </mapper>

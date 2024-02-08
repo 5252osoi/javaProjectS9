@@ -44,4 +44,6 @@ public interface PostService {
 
 	public PostLikeVO getShowPostLikeCheck(String mid, int idx);
 
+	public int setLikeDelete(int idx);
+
 }

@@ -47,6 +47,8 @@ public interface PostDAO {
 
 	public PostLikeVO getShowPostLikeCheck(@Param("mid") String mid, @Param("idx") int idx);
 
+	public int setLikeDelete(@Param("idx")int idx);
+
 	
 
 }

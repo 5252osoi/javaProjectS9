@@ -154,7 +154,7 @@
 	    	$.ajax({
 	    		url  : "${ctp}/post/postDelete",
 	    		type : "post",
-	    		data : {idx : idx},
+	    		data : {"idx" : idx},
 	    		success:function(res) {
 	    			if(res == "1") {
 	    				alert("포스트를 삭제했습니다.");
@@ -412,10 +412,26 @@
 	                    <a href="#"><img src="${ctp}/images/noprofile.png" alt=""></a>
 	                </div>
 	                <div>
-	                    <p class="username"><a href="${ctp}/member/userPage/${mVo.mid}">${mVo.mid}</a></p>
+	                    <p class="username"><a href="${ctp}/member/userPage?mid=${mVo.mid}">${mVo.mid}</a></p>
 	                    <p class="sub-text">${mVo.name}</p>
 	                </div>
-	                <button class="action-btn float-right" onclick="alert('준비중이에요ㅠ')">팔로우</button>
+	                <!-- 로그인한 사람이 팔로우 하고있는지 아닌지 체크 하고 버튼 출력 -->
+						<c:set var="follow" value="false"/>
+	                	<c:forEach var="fvo" items="${fvos}" varStatus="st">
+	                		<!-- lVo(좋아요에있는 postIDX와 게시글의 IDX가 같으면 follow=true 로 체크) -->
+	                		<c:if test="${mVo.mid==fvo.followeeMid}">
+		                		<c:set var="follow" value="true"/>
+	                		</c:if>
+	                	</c:forEach>
+	                	<c:if test="${sMid!=mVo.mid}">
+		                	<c:if test="${follow eq 'false'}">
+				                <button class="action-btn float-right" onclick="userFollow('${mVo.mid}')">팔로우</button>
+		     				</c:if>
+		     				<c:if test="${follow eq 'true'}">
+				                <button class="action-btn float-right" onclick="userUnFollow('${mVo.mid}')">언팔로우</button>
+		     				</c:if>
+	     				</c:if>
+	                	<!-- 체크끝 -->
 	            </div>
             </c:forEach>
         </div>

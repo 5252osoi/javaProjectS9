@@ -110,5 +110,10 @@ public class PostServiceImpl implements PostService {
 	public PostLikeVO getShowPostLikeCheck(String mid, int idx) {
 		return postDAO.getShowPostLikeCheck(mid,idx);
 	}
+
+	@Override
+	public int setLikeDelete(int idx) {
+		return postDAO.setLikeDelete(idx);
+	}
 	
 }

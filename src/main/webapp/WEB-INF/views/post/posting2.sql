@@ -32,7 +32,7 @@ create table postReply2 (
 	foreign key(postIdx) references posting2(idx),
 	foreign key(mid) references member2(mid)
 	on update cascade							/* 부모필드를 수정하면 함께 영향을 받는다. */
-	on delete restrict							/* 부모필를 함부로 삭제할수 없다. */
+	on delete restrict							/* 부모필드를 함부로 삭제할수 없다. */
 );
 desc postReply2;
 drop table postReply2;  

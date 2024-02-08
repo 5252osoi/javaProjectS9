@@ -65,10 +65,8 @@ public class MemberController {
 		res=memberService.setUserFollow(follower,followee);
 		System.out.println("결과 : "+res);
 		if(res!=0) {
-			res=memberService.setUserFollowUpdate();
-			if(res!=0) {
-				res=memberService.setUserFolloweeUpdate();
-			}
+			memberService.setUserFollowUpdate();
+			memberService.setUserFolloweeUpdate();
 		}
 		return res+"";
 	}
@@ -80,10 +78,8 @@ public class MemberController {
 		//follower=로그인한유저 /followee=팔로우할유저
 		res=memberService.setUserUnFollow(follower,followee);
 		if(res!=0) {
-			res=memberService.setUserFollowUpdate();
-			if(res!=0) {
-				res=memberService.setUserFolloweeUpdate();
-			}
+			memberService.setUserFollowUpdate();
+			memberService.setUserFolloweeUpdate();
 		}
 		return res+"";
 	}

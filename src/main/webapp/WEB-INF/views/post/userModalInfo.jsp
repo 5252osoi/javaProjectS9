@@ -49,7 +49,7 @@
 		<!-- 로그인한 사람이 팔로우 하고있는지 아닌지 체크 하고 버튼 출력 -->
 		<c:set var="follow" value="false"/>
 		<c:forEach var="fvo" items="${fvos}" varStatus="st">
-			<!-- lVo(좋아요에있는 postIDX와 게시글의 IDX가 같으면 follow=true 로 체크) -->
+			<!-- fvos(팔로우 같으면 follow=true 로 체크) -->
 			<c:if test="${mvo.mid==fvo.followeeMid}">
 				<c:set var="follow" value="true"/>
 			</c:if>
